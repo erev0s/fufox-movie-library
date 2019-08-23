@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+{% include 'fufox_head.html' %}
+
+
+<body>
+<div class="view-container d-flex flex-column">
+
+    {% include 'navbar.html' %}
+
+
+    <div class="indexContainer d-flex flex-grow-1">
+
+        <!-- MAIN CONTENT -->
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-secondary text-center">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            <a style="color:#6c757d;" href="#"> We <i class="fas fa-heart" style="color:#dd2930;"></i> FuFox</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+</div>
+{% load static %}
+<script src={% static "js/basic.js" %}></script>
+</body>
+
+</html>

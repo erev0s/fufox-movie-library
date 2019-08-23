@@ -1,0 +1,82 @@
+version: '3.7'
+
+services:
+  web:
+    container_name: fufox
+    build: ./fufox
+    command: gunicorn fufox.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - 8000
+   # ports:
+    environment:
+      - DEBUG=0
+      - SECRET_KEY=mtmo@2cn$q)z0*l^2lhskvt=md-s^f0c!g6s&v=y8ake%ona&
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=hello_django_dev
+      - SQL_USER=hello_django
+      - SQL_PASSWORD=hello_django
+      - SQL_HOST=db
+      - SQL_PORT=5432
+    depends_on:
+      - db
+      - elasticsearch
+    volumes:
+      - static_volume:/home/fufox/staticfiles
+    networks:
+      - esnet
+
+
+  db:
+    container_name: fufox_psql
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello_django
+      - POSTGRES_PASSWORD=hello_django
+      - POSTGRES_DB=hello_django_dev
+    networks:
+      - esnet
+
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.1
+    container_name: fufox_es
+    environment:
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - esnet
+
+
+  nginx:
+    container_name: fufox_nginx
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
+    volumes:
+      - static_volume:/home/fufox/staticfiles
+    networks:
+      - esnet
+
+
+
+
+volumes:
+  esdata01:
+  static_volume:
+  postgres_data:
+
+networks:
+  esnet:
+

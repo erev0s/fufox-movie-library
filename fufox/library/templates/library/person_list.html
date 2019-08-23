@@ -1,0 +1,73 @@
+{% extends "base_generic.html" %}
+{% block content %}
+    {% load custom_tags %}
+    <h1 style="margin-top: 30px;">People</h1>
+    {% if person_list %}
+        <p>We currently have in total: {{ numActors }} actors, {{ numDirectors }} Directors and {{ numWriters }}
+            Writers</p>
+
+
+
+
+            <div id="actors-list">
+                <div class="d-flex">
+                    <div><input type="text" class="dynamic_searching search" placeholder="Dynamic Filtering"
+                                title="You can filter names and last names but also number of movies!"/></div>
+                    <div>
+                        <ul class="sort-by">
+                            <li class="sort btn" data-sort="name">Sort by Name</li>
+                            <li class="sort btn" data-sort="number-movies"># of movies</li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown filter">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle filter-dropdown"
+                                data-toggle="dropdown">
+                            Filter <span class="substitute"></span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item btn" id="filter-none">Show all</a>
+                            <a class="dropdown-item btn" id="filter-actors">Actors</a>
+                            <a class="dropdown-item btn" id="filter-directors">Director</a>
+                            <a class="dropdown-item btn" id="filter-writers">Writer</a>
+                        </div>
+                    </div>
+
+                </div>
+            <div class="two-columns-li">
+                <ul class="list listjs-pretty">
+                    {% for person in person_list %}
+                        <li>
+                            <span> <a class="name" href="{{ person.get_absolute_url }}">{{ person.name }}</a></span> |
+                            <span class="number-movies"> # {{ person|get_number_of_movies_for_person }}</span> |
+                            <span class="capacity"> - {{ person.capacity }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="no-result">We didnt find anything <i class="fas fa-poo"></i></div>
+                <ul class="pagination"></ul>
+            </div>
+            </div>
+
+
+    {% else %}
+        <p>Noone is here :S</p>
+    {% endif %}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <script type="text/javascript">
+
+        var options = {
+            valueNames: ['name', 'number-movies', 'capacity'],
+            page: 99,
+            pagination: true,
+        };
+
+        var featureList = new List('actors-list', options);
+
+
+
+    </script>
+    {% load static %}
+    <script src={% static "js/basic.js" %}></script>
+{% endblock %}

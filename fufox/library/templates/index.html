@@ -1,0 +1,170 @@
+{% extends "base_index.html" %}
+{% load custom_tags %}
+{% load md2 %}
+{% block title %}<title>FuFox Movie Library</title>{% endblock %}
+{% block content %}
+
+    <section class="index-top-content d-flex align-items-center justify-content-center">
+        <div>
+            <img src="https://i.imgur.com/1nEafTl.png">
+        </div>
+        <div>
+            <H1>FuFox Library Project</H1>
+            <p style="text-align: center">Serving {{ num_movies }} movies currently!</p>
+        </div>
+
+    </section>
+    <div class="col-md-6 align-self-center">
+        <p style="text-align: center;">FuFox is a project created as a way to maintain a personal movie library where we
+            can indicate which movies we liked more, and to store them for future reference. </p>
+    </div>
+
+
+    {##############GAP###########}
+    <div class="gap-class"></div>
+    {##############GAP###########}
+
+
+    <h2 style="text-align: center;">Latest Movies Added!</h2>
+    <section class="col-md-9 align-self-center">
+
+        <div id="movieslist">
+            <div class="d-flex flex-wrap justify-content-center align-items-center">
+                <div>
+                    <ul class="filter">
+                        <li class="btn btn-dark btn-sm" id="filter-none">Show all</li>
+                        <li class="btn btn-dark btn-sm" id="filter-action">Action</li>
+                        <li class="btn btn-dark btn-sm" id="filter-adventure">Adventure</li>
+                        <li class="btn btn-dark btn-sm" id="filter-comedy">Comedy</li>
+                        <li class="btn btn-dark btn-sm" id="filter-drama">Drama</li>
+                        <li class="btn btn-dark btn-sm" id="filter-crime">Crime</li>
+                    </ul>
+                </div>
+                <div class="dropdown filter">
+                    <button type="button" class="btn btn-dark dropdown-toggle filter-dropdown btn-sm"
+                            style="margin-top: 0; margin-bottom: 1rem;" data-toggle="dropdown">
+                        More <span class="substitute"></span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item btn" id="filter-scifi">Sci-Fi</a>
+                        <a class="dropdown-item btn" id="filter-nonyet">More soon..</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list list-unstyled d-flex flex-wrap justify-content-center align-items-center">
+                {% for movie in last_thirty_movies %}
+                    <div class="index-movie-card">
+
+
+                        <a href="{{ movie.get_absolute_url }}">
+                            <img src="{{ movie.poster }}" class="index-movie-poster" alt="Unable to load photo, sorry!"
+                                 height="223px"
+                                 width="152px">
+                            <div class="index-image-overlay">
+                                <div class="index-overlayed-text">
+                                    {{ movie.title }}
+                                    <span class="genres" style="display:none;">{% for genre in movie.genre.all %}
+                                        {{ genre }}
+                                        {% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                                </div>
+                            </div>
+                        </a>
+
+
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="no-result">We didnt find anything <i class="fas fa-poo"></i></div>
+        </div>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+    {##############GAP###########}
+    <div class="gap-class"></div>
+    {##############GAP###########}
+
+
+    <section class="row d-flex align-content-center justify-content-center flex-column">
+        <ul class="d-flex flex-wrap align-content-center justify-content-center">
+            {% for genre in genres %}
+
+                <li class="index-genres"><a style="color: #444444;"
+                                            href="{{ genre.get_absolute_url }}">{{ genre.name }}</a></li>
+
+            {% endfor %}
+        </ul>
+    </section>
+
+
+    {##############GAP###########}
+    <div class="gap-class"></div>
+    {##############GAP###########}
+
+
+    <section>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md d-flex flex-column comments-col sidebox">
+                    <div style="margin-bottom: 5px;" class="sidebox-header">Latest Comments</div>
+                    {% for comment in latest_comments %}
+                        <div class="index-comment d-flex flex-column">
+                            <div class="d-flex index-comment-content"> {{ comment.content|markdown:"safe, code-friendly, code-color" }} </div>
+                            <div class="ml-auto small" style="margin-right:10px;"><a class="text-fufox"
+                                                                                     href="{{ comment.object_id|create_movie_link }}">{{ comment.object_id|get_movie_name }}</a>
+                                by <span class="text-secondary">{{ comment.user }}</span></div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <div class="col-md d-flex flex-column comments-col sidebox">
+                    <div style="margin-bottom: 5px;" class="sidebox-header">Latest Suggestions</div>
+                    {% for movie in suggestions %}
+                        <div class="index-comment d-flex">
+                            <div class="index-comment-content">
+                                <a href="{{ movie.get_absolute_url }}"> <img src="{{ movie.poster }}" width="50px" height="70px"></a>
+                            </div>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="flex-grow-1">
+                                     <a href="{{ movie.get_absolute_url }}" class="suggestions-movie"> {{ movie.title }}</a>
+                                </div>
+                                <div class="ml-auto" style="margin-right: 10px;">
+                                    {% for genre in movie.genre.all %}
+                                        <a href="{% url 'genre-detail' pk=genre.pk slug=genre.prettyUrl %}"> {{ genre }} </a>
+                                        {% if not forloop.last %}, {% endif %}{% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+    <script type="text/javascript">
+
+        var options = {
+            valueNames: ['name', 'score', 'genres']
+        };
+
+        var featureList = new List('movieslist', options);
+    </script>
+    {% load static %}
+    <script src={% static "js/basic.js" %}></script>
+{% endblock %}
+

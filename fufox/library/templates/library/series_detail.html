@@ -1,0 +1,184 @@
+{% extends "base_generic.html" %}
+{% block title %}<title>FuFox Library: {{ movie.title }}</title>{% endblock %}
+{% block head_links %}
+    {% load static %}
+    {% load humanize %}
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    {% load ratings %}
+    <div class="row"><h1 style="margin: 30px 0px 20px 30px;">{{ movie.title }}</h1></div>
+    <div class="row">
+
+        <div class="col-md-3 d-flex justify-content-center align-items-center">
+            <div class="main-pic" id="main-pic">
+                <img src="{{ movie.poster }}" class="img-fluid" alt="Cannot load photo, sorry!" width="300"
+                     height="500">
+            </div>
+        </div>
+
+        <div class="col-md-9 movie_details d-flex flex-column">
+            {% if user.is_authenticated %}
+                <div class="d-flex flex-row interaction-buttons">
+
+                    <div id="seen">
+                        {% if  seen == True %}
+                            <button type="button" class="btn btn-success waves-effect" onclick="Seen()">
+                                <i class="far fa-eye"></i> Have seen
+                            </button>
+                        {% else %}
+                            <button type="button" class="btn btn-outline-success waves-effect" onclick="Seen()">
+                                <i class="fas fa-eye-slash"></i> Not seen
+                            </button>
+                        {% endif %}
+                    </div>
+
+                    <div id="fav">
+                        {% if  fav == True %}
+                            <button type="button" class="btn btn-danger waves-effect" onclick="Fav()">
+                                <i class="fa fa-heart"></i> Favorited
+                            </button>
+                        {% else %}
+                            <button type="button" class="btn btn-outline-danger waves-effect" onclick="Fav()">
+                                <i class="fa fa-heart"></i> Favorite ?
+                            </button>
+                        {% endif %}
+                    </div>
+
+                    <div id="incinema">
+                        {% if  incinema == True %}
+                            <button type="button" class="btn btn-warning waves-effect" onclick="InCinema()">
+                                <i class="fas fa-film"></i> Cinema it is!
+                            </button>
+                        {% else %}
+                            <button type="button" class="btn btn-outline-warning waves-effect" onclick="InCinema()">
+                                <i class="fas fa-film"></i> at Cinema ?
+                            </button>
+                        {% endif %}
+                    </div>
+
+
+                </div>
+
+            {% endif %}
+
+            <div class="movie-listthings">
+                <ul class="list-unstyled">
+
+                    <li class="text-muted">
+
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="p-2 mr-auto"><a href="https://www.imdb.com/title/tt{{ movie.imdbid }}"><strong>IMDb
+                                Score:</strong> {{ movie.score }}</a></div>
+                            {% if perms.library.can_have_userchoices %}
+                                <div class="p-2">{% ratings movie 16 16 widget.html %}</div>
+                            {% else %}
+                                <div class="p-2">{% ratings movie 16 16 True widget.html %}</div>
+                            {% endif %}
+                        </div>
+
+                    </li>
+
+                    <li><strong>Director:</strong> {% for writer in writers %}
+                        <a href="{% url 'person-detail' pk=writer.pk slug=writer.prettyUrl %}">{{ writer }}</a>
+                        {% if not forloop.last %}, {% endif %}{% endfor %}
+                    </li>
+                    <li><strong>Genre:</strong> {% for genre in movie.genre.all %}
+                        <a href="{% url 'genre-detail' pk=genre.pk slug=genre.prettyUrl %}"> {{ genre }} </a>
+                        {% if not forloop.last %}, {% endif %}{% endfor %}</li>
+                    <li><strong>Actors:</strong> {% for actor in actors %}
+                        <a href="{% url 'person-detail' pk=actor.pk slug=actor.prettyUrl %}">{{ actor }}</a>
+                        {% if not forloop.last %}, {% endif %}{% endfor %}</li>
+
+                    <li title="Episodes per Season"><strong>S|E</strong> {% for key, value in seasons.items %}
+                        <span class="ml-4"> {{ key }} | {{ value }} </span>
+                        {% if not forloop.last %}, {% endif %}{% endfor %}</li>
+                    <li>
+                        <blockquote class="">
+                            <p class="mb-0">{{ movie.summary }}</p>
+                            <footer class="blockquote-footer"><strong>Summary</strong></footer>
+                        </blockquote>
+                    </li>
+                </ul>
+                <p class="addedby" style="margin-top:10px; margin-left:30px;">Added by <kbd>{{ movie.addedby }}</kbd>
+                    {{ movie.addedwhen|naturaltime }}</p>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+    {#    {% load crawler_tag %}#}
+    {#    {% get_links movie movie.id movie.prettyUrl %}#}
+    {% load comment_tags %}
+    {% get_comments movie request paginate=True cpp=7 %}
+    {% include_static %}
+
+    <script>
+        function Seen() {
+            var patch = '{% url "add_to_userchoices" id=movie.id %}';
+            var info = {'csrfmiddlewaretoken': "{{ csrf_token }}", 'type': "series", 'choice': "seen"};
+
+            $.ajax({
+                method: "POST",
+                url: patch,
+                data: info,
+
+                success: function (msg) {
+                    if (msg === "1") {
+                        console.log('seen - success');
+                        $("#seen").load(location.href + " #seen>*", "");
+                    } else {
+                        console.log('something is off here :O');
+                    }
+                }
+            })
+        }
+
+        function Fav() {
+            var patch = '{% url "add_to_userchoices" id=movie.id %}';
+            var info = {'csrfmiddlewaretoken': "{{ csrf_token }}", 'type': "series", 'choice': "fav"};
+
+            $.ajax({
+                method: "POST",
+                url: patch,
+                data: info,
+
+                success: function (msg) {
+                    if (msg === "1") {
+                        console.log('favorite - success');
+                        $("#fav").load(location.href + " #fav>*", "");
+                    } else {
+                        console.log('something is off here :O');
+                    }
+                }
+            })
+        }
+
+        function InCinema() {
+            var patch = '{% url "add_to_userchoices" id=movie.id %}';
+            var info = {'csrfmiddlewaretoken': "{{ csrf_token }}", 'type': "series", 'choice': "cinema"};
+
+            $.ajax({
+                method: "POST",
+                url: patch,
+                data: info,
+
+                success: function (msg) {
+                    if (msg === "1") {
+                        console.log('inCinema - success');
+                        $("#incinema").load(location.href + " #incinema>*", "");
+                    } else {
+                        console.log('something is off here :O');
+                    }
+                }
+            })
+        }
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %}<title>FuFox Movie Library</title>{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:400,500,700&display=swap&subset=greek"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {% load custom_tags %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    {% block head_links %}
+    {% endblock %}
+</head>
+
+
+<body>
+{#In this "base" we have the flex defined here and it includes navbar - content - footer#}
+<div class="view-container d-flex flex-column">
+    {% include 'navbar.html' %}
+
+    <div class="indexContainer d-flex flex-grow-1" id="main-content">
+        {#Sidebar#}
+        <div class="col-sm-2 sidebar d-none d-lg-block">
+
+            {% if user.is_authenticated %}
+                <div class="sidebox">
+                    <h3 class="sidebox-header"><a href="{% url 'profile_view' %}"> {{ request.user.get_username }} </a></h3>
+                    <ul class="sidebar-nav">
+                        <li><strong>Favorites: </strong> {{ request.user|yourfavorites }}</li>
+                        <li><strong>Seen: </strong> {{ request.user|yourhaveseen }}</li>
+                        <li><strong>In Cinema: </strong> {{ request.user|yourcinemaones }}</li>
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="sidebox">
+                <h3 class="sidebox-header">FuFox Statistics</h3>
+                <p style="padding: 4px 10px 4px 10px;"> We currently serve <kbd>{{ dummy|howmanymovies }}</kbd> Movies
+                    with
+                    <kbd>{{ dummy|howmanydirectors }}</kbd> directors and
+                    <kbd>{{ dummy|howmanyactors }}</kbd> actors.
+                </p>
+            </div>
+            {#        In case we want to add something else in the sidebar for some page#}
+            {% block sidebar %}
+            {% endblock %}
+        </div>
+
+        {#Maincontent with pagination#}
+        <div class="d-flex flex-grow-1 flex-column">
+
+            <!-- MAIN CONTENT -->
+            <div>  {% block content %}{% endblock %}</div>
+            <div>   {% block pagination %}
+                {% if is_paginated %}
+                    <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+                    </div>
+                {% endif %}
+            {% endblock %}
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-secondary text-center">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            <a style="color:#6c757d;" href="#"> We <i class="fas fa-heart" style="color:#dd2930;"></i> FuFox</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+</div>
+{% load static %}
+<script src={% static "js/basic.js" %}></script>
+</body>
+
+</html>

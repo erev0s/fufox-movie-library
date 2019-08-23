@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+{% include 'fufox_head.html' %}
+
+
+<body>
+<script>
+  document.body.classList.add('fade');
+</script>
+{#I do not put flex here due to a bug in firefox using it#}
+<div class="view-container">
+    {% include 'navbar.html' %}
+
+
+    <div class="indexContainer">
+        <div class="d-flex flex-column">
+
+            <!-- MAIN CONTENT -->
+            {% block content %}{% endblock %}
+
+
+        </div>
+
+
+        <!-- Footer -->
+        <footer class="bg-dark text-secondary text-center">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">© 2019 Copyright:
+                <a style="color:#6c757d;" href="#"> We <i class="fas fa-heart" style="color:#dd2930;"></i> FuFox</a>
+            </div>
+            <!-- Copyright -->
+
+        </footer>
+        <!-- Footer -->
+
+    </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(e) {
+    document.body.classList.remove('fade');
+  });
+</script>
+</body>
+
+</html>

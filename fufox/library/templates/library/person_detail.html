@@ -1,0 +1,96 @@
+{% extends "base_generic.html" %}
+{% block title %}<title>FuFox: {{ person.name }}</title>{% endblock %}
+{% block content %}
+
+
+
+    <h1 style="margin-top: 30px;">{{ person.name }}</h1>
+    <div id="movieslist">
+        <div class="d-flex">
+            <div><input type="text" class="dynamic_searching search" placeholder="Dynamic Filtering"
+                        title="You can filter titles, years, genres and type!"/></div>
+            <div>
+                <ul class="sort-by">
+                    <li class="sort btn" data-sort="name">Sort by Name</li>
+                    <li class="sort btn" data-sort="score">Sort by Score</li>
+                </ul>
+            </div>
+
+
+            <div class="dropdown filter">
+                <button type="button" class="btn btn-outline-light dropdown-toggle filter-dropdown"
+                        data-toggle="dropdown">
+                    Filter <span class="substitute"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item btn" id="filter-none">Show all</a>
+                    <a class="dropdown-item btn" id="filter-action">Action</a>
+                    <a class="dropdown-item btn" id="filter-adventure">Adventure</a>
+                    <a class="dropdown-item btn" id="filter-comedy">Comedy</a>
+                    <a class="dropdown-item btn" id="filter-drama">Drama</a>
+                    <a class="dropdown-item btn" id="filter-crime">Crime</a>
+                    <a class="dropdown-item btn" id="filter-scifi">Sci-Fi</a>
+                </div>
+            </div>
+        </div>
+
+        <ul class="list list-unstyled">
+            {% for movie in alllist %}
+                <li>
+
+
+                    <div class="d-flex flex-row card list-unstyled">
+
+                        <div class="card-image_detail">
+                            <a href="{{ movie.get_absolute_url }}"><img src="{{ movie.poster }}"
+                                                                        alt="Cannot load photo, sorry!" width="90"
+                                                                        height="120"></a>
+                        </div>
+
+                        <div class="flex-grow-1 card-stacked">
+
+                            <span style="font-size: 1.2rem;" class="card-title"> <a class="name"
+                                                                                    href="{{ movie.get_absolute_url }}">{{ movie.title }}</a></span>
+                            <span class="text-muted score"> ({{ movie.score }}) </span>
+                            <span class="genres">{% for genre in movie.genre.all %}
+                                <a
+                                        href="{% url 'genre-detail' pk=genre.pk slug=genre.prettyUrl %}"> {{ genre }} </a>
+                                {% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                            <span class="movie-type">
+                            {% if movie.episodes %}
+                                <kbd>TV Series</kbd>
+                            {% else %}
+                                <kbd>Movie</kbd>
+                            {% endif %}
+                        </span>
+                            <p><strong>Summary:</strong> {{ movie.summary }}</p>
+                        </div>
+
+                    </div>
+
+
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="no-result">We didnt find anything <i class="fas fa-poo"></i></div>
+        <ul class="pagination"></ul>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+    <script type="text/javascript">
+
+        var options = {
+            valueNames: ['name', 'score', 'genres', 'movie-type'],
+            page: 15,
+            pagination: true,
+        };
+
+        var featureList = new List('movieslist', options);
+
+    </script>
+    {% load static %}
+    <script src={% static "js/basic.js" %}></script>
+{% endblock %}
+
+

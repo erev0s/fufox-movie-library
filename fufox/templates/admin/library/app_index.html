@@ -1,0 +1,9 @@
+{% extends "admin/app_index.html" %}
+
+{% block sidebar %}
+
+    <form action="{% url 'add-bulk-movies' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" name="Import" value="Bulk Import Movies" />
+</form>
+{% endblock %}

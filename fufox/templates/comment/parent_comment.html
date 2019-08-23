@@ -1,0 +1,11 @@
+{% load comment_tags %}
+<blockquote class="js-parent-comment blockquote text-wrap">
+    {% include 'comment/image.html' with obj=comment is_parent=True %}
+    <div class="js-replies ml-5 my-4 d-none">
+        {% for reply in comment.replies %}
+            {% include 'comment/child_comment.html' %}
+        {% endfor %}
+        {% include 'comment/create_comment.html' with button_name='reply' is_child=True placeholder="reply to this comment..." %}
+    </div>
+    <hr/>
+</blockquote>

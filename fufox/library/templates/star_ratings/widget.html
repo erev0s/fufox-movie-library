@@ -1,0 +1,18 @@
+{% extends "star_ratings/widget_base.html" %}
+
+
+    {% block rating_detail %}
+    {% block rating_average %}
+    <div class="star-ratings-rating-average p-2 star-stats-style" style="margin-left: 22px;"><span data-toggle="tooltip" data-placement="top" title="Average Rating" class='star-ratings-rating-value'>{{ rating.average|floatformat:"-2" }}</span></div>
+    {% endblock rating_average %}
+    {% block rating_count %}
+    <div class="star-ratings-rating-count p-2 star-stats-style"><span data-toggle="tooltip" data-placement="top" title="How many people have rated this movie?" class='star-ratings-rating-value'>{{ rating.count }}</span></div>
+    {% endblock rating_count %}
+    {% block rating_user %}
+    <div class="star-ratings-rating-user p-2 star-stats-style"><span data-toggle="tooltip" data-placement="top" title="This is the rating you have submitted" class='star-ratings-rating-value'>{% if user_rating %}{{ user_rating.score }}{% else %}Not rated{% endif %}</span></div>
+    {% if not user.is_authenticated and not anonymous_ratings and not read_only %}
+{#        <p><a style="color:white;" href="/accounts/login"> Login Please</a></p>#}
+    {% endif %}
+    {% endblock rating_user %}
+    <div class="star-ratings-errors"></div>
+    {% endblock rating_detail %}

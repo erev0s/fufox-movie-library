@@ -1,0 +1,11 @@
+<form method="post" action={% url 'search_results' %}>
+    {% csrf_token %}
+    {{ search_form }}
+    <div class="btn-group" role="group" aria-label="Generic Search">
+        <button title="Click to search for a term" type="submit" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom">Search</button>
+        <button title="Custom Search" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"><a href={% url 'custom_search' %}><i class="fas fa-user-astronaut"></i></a></button>
+    </div>
+</form>
+
+{% load static %}
+<script src={% static "js/basic.js" %}></script>

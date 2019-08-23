@@ -1,0 +1,45 @@
+{% extends 'base_generic_no_sidebar.html' %}
+
+{% block content %}
+
+
+    <div class="m-auto sidebox comments-col">
+
+        <div class="d-flex">
+
+            <div class="d-flex flex-column m-auto">
+                    <img style="margin: 20px;" src="{{ user.profile_pic }}" width="120px" height="120px">
+            </div>
+            <ul class="list-unstyled movie_details">
+                <li>
+                    <i class="fas fa-baby"></i> Username: <span style="color: #00abfe">{{ user.username }}</span>
+                </li>
+                <li>
+                    <i class="fas fa-at"></i> Email: <span style="color: #00abfe">{{ user.email }}</span>
+                </li>
+                <li>
+                    <i class="fas fa-calendar-alt"></i> Date Joined: <span style="color: #00abfe">{{ user.date_joined }}</span>
+                </li>
+                <li style="margin-top: 15px;" class="index-comment">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">{{ user.bio }}</p>
+                        <footer class="blockquote-footer">Bio</footer>
+                    </blockquote>
+                </li>
+            </ul>
+
+
+        </div>
+
+
+                    <a style="margin: 20px;" class="btn btn-danger" href="{% url 'profile_edit' %}"> Edit Profile</a>
+
+                    <a style="margin: 20px;" class="btn btn-danger" href="{% url 'account_change_password' %}">Change Password</a>
+
+                    <a style="margin: 20px;" class="btn btn-danger" href="{% url 'account_email' %}">Manage Email</a>
+
+    </div>
+
+
+
+{% endblock %}

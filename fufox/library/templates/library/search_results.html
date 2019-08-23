@@ -1,0 +1,69 @@
+{% extends "base_generic.html" %}
+{% block title %}<title>FuFox: {{ genre.name }}</title>{% endblock %}
+{% block content %}
+
+    <h1 style="margin-top: 30px;">Search Results</h1>
+{% if hits %}
+    <div id="movieslist">
+        <div class="d-flex">
+            <div><input type="text" class="dynamic_searching search" placeholder="Filtering" title="You can filter titles, years, genres and type!"/></div>
+            <div>
+                <ul class="sort-by">
+                    <li class="sort btn" data-sort="name">Sort by Name</li>
+                    <li class="sort btn" data-sort="score">Sort by Score</li>
+                </ul>
+            </div>
+        </div>
+
+        <ul class="list list-unstyled">
+            {% for hit in hits %}
+                <li>
+
+
+                    <div class="d-flex flex-row card list-unstyled">
+
+                        <div class="flex-grow-1 card-stacked">
+
+                            <span style="font-size: 1.2rem;" class="card-title"> <a class="name"
+                                                                                    href="{% url 'movie-detail' pk=hit.id slug=hit.prettyUrl %}">{{ hit.title }}</a></span>
+                            <span class="text-muted score"> ({{ hit.score }}) </span>
+                            <span class="genres">{% for genre in hit.genres %}
+                                {{ genre }}
+                                {% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                            <p><strong>Summary:</strong> {{ hit.summary }}</p>
+                        </div>
+
+                    </div>
+
+
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="no-result">We didnt find anything <i class="fas fa-poo"></i></div>
+    <ul class="pagination"></ul>
+    <kbd class="mt-auto">total hits found : {{ total_hits }} and it took {{ time_took }} miliseconds</kbd>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+    <script type="text/javascript">
+
+        var options = {
+            valueNames: ['name', 'score', 'genres', 'movie-type'],
+            page: 30,
+            pagination: true,
+        };
+
+        var featureList = new List('movieslist', options);
+
+    </script>
+    {% load static %}
+    <script src={% static "js/basic.js" %}></script>
+
+    {% else %}
+    No results found !
+    {% endif %}
+{% endblock %}
+
+
+

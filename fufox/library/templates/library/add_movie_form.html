@@ -1,0 +1,29 @@
+{% extends "base_generic_no_sidebar.html" %}
+
+{% block content %}
+
+    {% load crispy_forms_tags %}
+    {% if perms.library.can_add_movie %}
+        <div class="add_movie_form">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-outline-danger">Add it!</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="add_movie_form">
+
+            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="right"
+                    title="You Dont have the permission :(">
+                Add a movie
+            </button>
+        </div>
+    {% endif %}
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+{% endblock %}

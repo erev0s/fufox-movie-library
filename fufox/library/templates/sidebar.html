@@ -1,0 +1,24 @@
+<div class="col-sm-2 sidebar d-none d-lg-block">
+    {% load custom_tags %}
+    {% if user.is_authenticated %}
+        <div class="sidebox">
+            <h3 class="sidebox-header"><a href="#"> {{ request.user.get_username }} </a></h3>
+            <ul class="sidebar-nav">
+                <li><strong>Favorites: </strong> {{ request.user|yourfavorites }}</li>
+                <li><strong>Seen: </strong> {{ request.user|yourhaveseen }}</li>
+                <li><strong>In Cinema: </strong> {{ request.user|yourcinemaones }}</li>
+            </ul>
+        </div>
+    {% endif %}
+    <div class="sidebox">
+        <h3 class="sidebox-header">FuFox Statistics</h3>
+        <p style="padding: 4px 10px 4px 10px;"> We currently serve <kbd>{{ dummy|howmanymovies }}</kbd> Movies
+            with
+            <kbd>{{ dummy|howmanydirectors }}</kbd> directors and
+            <kbd>{{ dummy|howmanyactors }}</kbd> actors.
+        </p>
+    </div>
+    {#        In case we want to add something else in the sidebar for some page#}
+    {% block sidebar %}
+    {% endblock %}
+</div>
