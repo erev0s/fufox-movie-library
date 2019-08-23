@@ -11,9 +11,7 @@ django-markdown2 = "*"
 django-comments-dab = "*"
 django-widget-tweaks = "*"
 django-allauth = "*"
-beautifulsoup4 = "*"
 django-elasticsearch-dsl = "==6.4.2"
-google = "*"
 gunicorn= "==19.9.0"
 
 [dev-packages]
