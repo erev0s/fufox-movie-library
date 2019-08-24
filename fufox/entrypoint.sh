@@ -14,6 +14,6 @@ sleep 2
 python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic --no-input
-python manage.py shell -c "from users.models import CustomUser; CustomUser.objects.create_superuser('er', 'admin@example.com', 'djangoproject1')"
+python manage.py shell -c "from users.models import CustomUser; CustomUser.objects.create_superuser('erev0s', 'admin@example.com', 'djangoproject')"
 
 exec "$@"
