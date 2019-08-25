@@ -3,7 +3,7 @@
 
 FuFox is a light weight movie and TV series library created with Django. It can be used to keep track of movies and TV series you have watched and also rate them and suggest them to friends.  
   
-![FuFox Preview](https://media.giphy.com/media/YMv3cvTmulnKnAf0LC/giphy.gif)
+![FuFox Preview](https://i.imgur.com/hbX0iLo.jpg)
 ## Bring Up FuFox
 The project is deployed using `docker-compose`. This allows everything to be set up with minimal effort for anyone who might want to use it.
 To bring it up simply run:
