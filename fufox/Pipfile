@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+djangorestframework = ">=3.9.1"
 django-crispy-forms = "*"
 django-star-ratings = "*"
 IMDbPY = "*"
