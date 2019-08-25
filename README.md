@@ -1,9 +1,9 @@
 # Fufox Movie Library
-![alt text](https://i.imgur.com/qDUkNPH.png "Fufox Movie Library")
+![Fufox Movie Library](https://i.imgur.com/qDUkNPH.png "Fufox Movie Library")
 
-FuFox is a light weight movie and TV series library created with Django. The fact that I wanted to learn how to use the Django Framework and that I wanted to do so by creating something useful led to the creation of FuFox. I am still improving it as I am planning to use it as my personal movie library, in a way to keep track of the movies/series I liked so I can also suggest them to other people.  
+FuFox is a light weight movie and TV series library created with Django. It can be used to keep track of movies and TV series you have watched and also rate them and suggest them to friends.  
   
-
+![FuFox Preview](https://media.giphy.com/media/YMv3cvTmulnKnAf0LC/giphy.gif "Fufox Movie Library")
 ## Bring Up FuFox
 The project is deployed using `docker-compose`. This allows everything to be set up with minimal effort for anyone who might want to use it.
 To bring it up simply run:
@@ -30,7 +30,7 @@ Following is a list of features that have been added to FuFox.
  - General searching and more precise searching through Elasticsearch.
  - Dynamic listing/filtering in multiple locations
  - Bootstrap/Font-Awesome for responsiveness
- - URLs of series and movies that are SEO friendly.
+ - SEO friendly structure.
  - more...
 
 
@@ -40,7 +40,9 @@ How can I rebuild the indexes of the Elasticsearch? |
 --- |
 Simply run `docker exec -it fufox python manage.py search_index --rebuild` and answer `Y` when asked |
 
-
+How can I add movies/series in bulk? |
+--- |
+Inside the folder fufox you will find a text file names `movies.txt`. You can fill in there the IMDb urls of the movies/series you would like to add and visit the Admin Dashboard. In `Library` you will find a button named `Bulk Import Movies`. |
 
 
 ## To be done
