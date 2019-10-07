@@ -11,7 +11,7 @@ class AddMovieIMDBForm(forms.Form):
         if ((len(data) < 6) or (len(data) > 11)) and not data.isdigit():
             # then this is not only the imdb id, we need to attempt to extract it
             try:
-                maybetheid = re.search("(?<=https://www.imdb.com/title/tt)[^\/]{4,10}", str(data), flags=0).group()
+                maybetheid = re.search("(?<=imdb.com/title/tt)[^\/]{4,10}", str(data), flags=0).group()
             except:
                 raise forms.ValidationError('IMDb id does not seem correct')
             if not maybetheid.isdigit():

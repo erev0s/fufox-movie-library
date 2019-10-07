@@ -20,7 +20,7 @@ def index(request):
     num_movies = Movie.objects.all().count()
 
     # Lets get the latest 24 movies to show
-    latestthirty = Movie.objects.order_by('-id')[:24]
+    latestthirty = Movie.objects.order_by('-id')[:10]
 
     # Lets get also some genres to show
     genres = Genre.objects.order_by('id')
@@ -267,7 +267,7 @@ def Addmovie(request):
 @staff_member_required
 def Addbulkmovies(request):
     if request.method == 'POST':
-        if request.user.username == 'er':
+        if request.user.is_superuser:
             f = open('movies.txt')
             for line in f:
                 if len(line) > 10:

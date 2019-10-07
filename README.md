@@ -49,3 +49,11 @@ Inside the folder fufox you will find a text file names `movies.txt`. You can fi
 
 ## To be done
 Let me know of suggestions or questions!
+
+
+## Changelog
+
+ - 07/10/2019
+   - Relaxed regex so users can add movies/series using mobile links of IMDb
+   - Fixed permission on bulk adding movies/series
+   - Minor change in structure of index.html
