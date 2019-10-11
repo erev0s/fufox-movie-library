@@ -7,7 +7,7 @@ class AddMovieIMDBForm(forms.Form):
     movienumber = forms.CharField(max_length=100, help_text="Enter the IMDb url.")
 
     def clean_movienumber(self):
-        data = self.cleaned_data['movienumber']
+        data = self.cleaned_data['movienumber'].rstrip()
         if ((len(data) < 6) or (len(data) > 11)) and not data.isdigit():
             # then this is not only the imdb id, we need to attempt to extract it
             try:

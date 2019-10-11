@@ -20,7 +20,7 @@ def index(request):
     num_movies = Movie.objects.all().count()
 
     # Lets get the latest 24 movies to show
-    latestthirty = Movie.objects.order_by('-id')[:10]
+    latestthirty = Movie.objects.order_by('-id')[:12]
 
     # Lets get also some genres to show
     genres = Genre.objects.order_by('id')
@@ -212,7 +212,7 @@ def Addmovie(request):
 
                 # if it already exists
                 if not created:
-                    return HttpResponse("1")
+                    return redirect('movie-detail', pk=check.id)
                 check.title = movie.get('long imdb title')
                 if mv:
                     check.year = movie.get('year')

@@ -2,10 +2,10 @@
 ![Fufox Movie Library](https://i.imgur.com/qDUkNPH.png "Fufox Movie Library")
 
 FuFox is a light weight movie and TV series library created with Django. It can be used to keep track of movies and TV series you have watched and also rate them and suggest them to friends.  
-  
+
 <img src="/fufox_preview.gif?raw=true">
-  
-  
+
+
 ## Bring Up FuFox
 The project is deployed using `docker-compose`. This allows everything to be set up with minimal effort for anyone who might want to use it.
 To bring it up simply run:
@@ -24,7 +24,7 @@ Following is a list of features that have been added to FuFox.
  - Support to add Movies|Series|Genres|Actors|Directors|Writers
  - Automatic fetch of movie/series details through IMDb (using [IMDbPy](https://github.com/alberanid/imdbpy))
  - Mark movies/series if you have seen them, if they belong to the favorite ones and if you have seen it in cinema.
- - User rating system for movies/series (based on [django-star-rating](https://github.com/wildfish/django-star-ratings)
+ - User rating system for movies/series (based on [django-star-rating](https://github.com/wildfish/django-star-ratings))
  - Custom User Model with register/login/profile and more pages
  - Well defined user permissions
  - Support for registration through Social Pages (Facebook, Twitter etc), using [django-allauth](https://github.com/pennersr/django-allauth)
@@ -53,7 +53,8 @@ Let me know of suggestions or questions!
 
 ## Changelog
 
- - 07/10/2019
+ - 10/2019
    - Relaxed regex so users can add movies/series using mobile links of IMDb
    - Fixed permission on bulk adding movies/series
    - Minor change in structure of index.html
+   - Fix duplicate submission issue
