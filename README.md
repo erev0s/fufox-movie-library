@@ -58,3 +58,4 @@ Let me know of suggestions or questions!
    - Fixed permission on bulk adding movies/series
    - Minor change in structure of index.html
    - Fix duplicate submission issue
+   - Added run time in movies

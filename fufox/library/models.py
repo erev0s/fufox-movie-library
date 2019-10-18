@@ -60,6 +60,7 @@ class Movie(models.Model):
     people = models.ManyToManyField(Person, help_text='Actors and Directors of the Movie')
     summary = models.TextField(max_length=400, help_text='Enter a brief description')
     genre = models.ManyToManyField(Genre, help_text='Select a genre')
+    runtimes = models.IntegerField(verbose_name='Runtime', null=True, blank=True)
     score = models.DecimalField(blank=True, default=0.0, max_digits=2, decimal_places=1,
                                 validators=[MinValueValidator(Decimal('0.01'))])
     poster = models.URLField(default='', blank=True)

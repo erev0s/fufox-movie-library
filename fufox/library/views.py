@@ -219,6 +219,7 @@ def Addmovie(request):
                     for director in movie.get('directors'):
                         checkdirector, created = Person.objects.get_or_create(name=director, capacity='Director')
                         check.people.add(checkdirector)
+                    check.runtimes = movie.get('runtimes')[0]
                 else:
                     check.year = movie.get('series years')
                     for writer in movie.get('writer'):
@@ -300,6 +301,7 @@ def Addbulkmovies(request):
                     for director in movie.get('directors'):
                         checkdirector, created = Person.objects.get_or_create(name=director, capacity='Director')
                         check.people.add(checkdirector)
+                    check.runtimes = movie.get('runtimes')[0]
                 else:
                     check.year = movie.get('series years')
                     for writer in movie.get('writer'):
