@@ -1,7 +1,9 @@
 # Fufox Movie Library
 ![Fufox Movie Library](https://i.imgur.com/qDUkNPH.png "Fufox Movie Library")
 
-FuFox is a light weight movie and TV series library created with Django. It can be used to keep track of movies and TV series you have watched and also rate them and suggest them to friends.  
+FuFox is a relatively light weight movie and TV series library created with Django. It can be used to keep track of movies and TV series you have watched and also rate them and suggest them to friends. It started as a project so I can get more familiar with Django and play around with Postgresql and Elasticsearch. I was skeptical about Elasticsearch in the beginning as it requires some resources in order to run properly but it offers really nice features which I wanted to explore.   
+The code is by no means ready for production but it serves my purposes for creating a library to keep track of my movies and shows. I will update it whenever possible with features I am adding as time passes!  
+
 
 <img src="/fufox_preview.gif?raw=true">
 
