@@ -39,7 +39,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         {% if not request.user.is_authenticated %}
                             <a class="dropdown-item" href="{% url 'account_signup' %}">Register</a>
-                            <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>
+                            <a class="dropdown-item" href="{% url 'account_login' %}?next={{request.path}}">Login</a>
                         {% else %}
                             <a class="dropdown-item" href="{% url 'profile_view' %}">Profile</a>
                             <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
