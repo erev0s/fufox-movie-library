@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-djangorestframework = ">=3.9.1"
+Django = ">=2.2.8"
 django-crispy-forms = "*"
 django-star-ratings = "*"
 IMDbPY = "*"
@@ -13,7 +13,8 @@ django-comments-dab = "*"
 django-widget-tweaks = "*"
 django-allauth = "*"
 django-elasticsearch-dsl = "==6.4.2"
-gunicorn= "==19.9.0"
+gunicorn = "==19.9.0"
+djangorestframework = "==3.9.1"
 
 [dev-packages]
 

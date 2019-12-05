@@ -1,4 +1,4 @@
-django
+django>=2.2.8
 django-crispy-forms
 django_star_ratings
 IMDbPY
@@ -7,4 +7,5 @@ django-comments-dab
 django-widget-tweaks
 django-allauth
 django-elasticsearch-dsl==6.4.2
-gunicorn
+gunicorn==19.9.0
+djangorestframework==3.9.1
